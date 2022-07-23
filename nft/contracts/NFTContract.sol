@@ -49,13 +49,14 @@ contract NFTContract is ERC721 {
         uint256 newItemId = _tokenIds.current();
         
         require(newItemId<saleSize, "all NFT sold out");
-        require(msg.value <=mintingFees, "less fees");
+        require(msg.value >=mintingFees, "less fees");
         string memory finalTokenUri = string(
             abi.encodePacked(baseTokenURI(),Strings.toString(newItemId),".json") 
         );
         _safeMint(msg.sender, newItemId);
         _setTokenURI(newItemId, finalTokenUri);
         _tokenIds.increment();
+        
     }
 
 }
